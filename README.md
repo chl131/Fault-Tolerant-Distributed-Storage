@@ -1,13 +1,4 @@
-# Surfstore
-
-This is the starter code for Project 4: Surfstore.
-
-Before you get started, make sure you understand the following 2 things about Go. (These will also be covered in class and in discussions)
-1. Interfaces: They are named collections of method signatures. Here are some good resources to understand interfaces in Go:
-    a. https://gobyexample.com/interfaces
-    b. https://jordanorelli.com/post/32665860244/how-to-use-interfaces-in-go
-
-2. gRPC: You should know how to write gRPC servers and clients in Go. The [gRPC official documentation](https://grpc.io/docs/languages/go/basics/) of the *grpc* is a good resource.
+# Fault-Tolerant-Distributed-Storage
 
 ## Protocol buffers
 
@@ -159,6 +150,3 @@ make run-blockstore
 ```shell
 make run-metastore
 ```
-
-## Testing 
-On gradescope, only a subset of test cases will be visible, so we highly encourage you to come up with different scenarios like the one described above. You can then match the outcome of your implementation to the expected output based on the theory provided in the writeup.
