@@ -2,7 +2,7 @@
 
 ## Protocol buffers
 
-The starter code defines the following protocol buffer message type in `SurfStore.proto`:
+The following protocol buffer message type is defined in `SurfStore.proto`:
 
 ```
 message Block {
@@ -33,7 +33,7 @@ service MetaStore {
 }
 ```
 
-**You need to generate the gRPC client and server interfaces from our .proto service definition.** We do this using the protocol buffer compiler protoc with a special gRPC Go plugin (The [gRPC official documentation](https://grpc.io/docs/languages/go/basics/) introduces how to install the protocol compiler plugins for Go).
+**Generate the gRPC client and server interfaces from the .proto service definition.**
 
 ```shell
 protoc --proto_path=. --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative pkg/surfstore/SurfStore.proto
@@ -73,25 +73,6 @@ type BlockStoreInterface interface {
 }
 ```
 
-## Implementation
-### Server
-`BlockStore.go` provides a skeleton implementation of the `BlockStoreInterface` and `MetaStore.go` provides a skeleton implementation of the `MetaStoreInterface` 
-**You must implement the methods in these 2 files which have `panic("todo")` as their body.**
-
-`cmd/SurfstoreServerExec/main.go` also has a method `startServer` **which you must implement**. Depending on the service type specified, it should register a `MetaStore`, `BlockStore`, or `Both` and start listening for connections from clients.
-
-### Client
-`SurfstoreRPCClient.go` provides the gRPC client stub for the surfstore gRPC server. **You must implement the methods in this file which have `panic("todo")` as their body.** (Hint: one of them has been implemented for you)
-
-`SurfstoreUtils.go` also has the following method which **you need to implement** for the sync logic of clients:
-```go
-/*
-Implement the logic for a client syncing with the server here.
-*/
-func ClientSync(client RPCClient) {
-	panic("todo")
-}
-```
 ## Usage
 1. Run your server using this:
 ```shell
@@ -115,7 +96,7 @@ Run the commands below on separate terminals (or nodes)
 > go run cmd/SurfstoreServerExec/main.go -s block -p 8081 -l
 > go run cmd/SurfstoreServerExec/main.go -s meta -l localhost:8081
 ```
-The first line starts a server that services only the BlockStore interface and listens only to localhost on port 8081. The second line starts a server that services only the MetaStore interface, listens only to localhost on port 8080, and references the BlockStore we created as the underlying BlockStore. (Note: if these are on separate nodes, then you should use the public ip address and remove `-l`)
+The first line starts a server that services only the BlockStore interface and listens only to localhost on port 8081. The second line starts a server that services only the MetaStore interface, listens only to localhost on port 8080, and references the BlockStore created as the underlying BlockStore. (Note: if these are on separate nodes, then you should use the public ip address and remove `-l`)
 
 3. From a new terminal (or a new node), run the client using the script provided in the starter code (if using a new node, build using step 1 first). Use a base directory with some files in it.
 ```shell
@@ -132,21 +113,30 @@ This would sync pic.jpg to the server hosted on `server_addr:port`, using `dataA
 > ls dataB/
 pic.jpg index.txt
 ```
-We observe that pic.jpg has been synced to this client.
+The pic.jpg has been synced to this client.
 
 ## Makefile
-We also provide a make file for you to run the BlockStore and MetaStore servers.
-1. Run both BlockStore and MetaStore servers (**listens to localhost on port 8081**):
-```shell
-make run-both
+Run BlockStore server:
+```console
+$ make run-blockstore
 ```
 
-2. Run BlockStore server (**listens to localhost on port 8081**):
-```shell
-make run-blockstore
+Run RaftSurfstore server:
+```console
+$ make IDX=0 run-raft
 ```
 
-3. Run MetaStore server (**listens to localhost on port 8080**):
-```shell
-make run-metastore
+Test:
+```console
+$ make test
+```
+
+Specific Test:
+```console
+$ make TEST_REGEX=Test specific-test
+```
+
+Clean:
+```console
+$ make clean
 ```
