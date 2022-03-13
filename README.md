@@ -1,5 +1,8 @@
 # Fault-Tolerant-Distributed-Storage
 
+## Demo
+[![DEMO](./img/Demo.png)](https://youtu.be/cWOSVrF5iDo)
+
 ## Protocol buffers
 
 The following protocol buffer message type is defined in `SurfStore.proto`:
